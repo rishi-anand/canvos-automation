@@ -1,0 +1,22 @@
+name: "Close stale issues"
+on:
+  schedule:
+    - cron: "* * * * *"
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create nightly release
+        id: create_release
+        uses: viperproject/create-nightly-release@v1
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: Nightly Release ${{ env.TAG_NAME }}
+          body: Body for the release
+          keep_num: 0
+          keep_tags: false
+      - run: echo "Helllo"
