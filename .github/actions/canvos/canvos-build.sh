@@ -1,6 +1,6 @@
 # Create reports folder
 
-#set -e
+set -e
 set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
@@ -135,13 +135,13 @@ function clean() {
 git_clone_canvos
 create_arg_file
 login_gcr
-#build_artifacts
+build_artifacts
 push_docker_images
 
-#if [ "$build_type" = "ISO-Provider" ]; then
-#  upload_iso_to_s3
-#  upload_to_vsphere_datastore
-#fi
+if [ "$build_type" = "ISO-Provider" ]; then
+  upload_iso_to_s3
+  upload_to_vsphere_datastore
+fi
 
 if [ "$output_artifact" = "ISO" ]; then
   clean
