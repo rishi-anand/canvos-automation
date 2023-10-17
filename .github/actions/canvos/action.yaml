@@ -34,6 +34,8 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
+      run: ./.github/actions/canvos/canvos-clean.sh
+    - shell: bash
       run: ./.github/actions/canvos/canvos-build.sh
       env:
         canvos_tag: ${{ inputs.canvos_tag }}
