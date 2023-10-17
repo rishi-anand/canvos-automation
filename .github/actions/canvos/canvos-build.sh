@@ -29,3 +29,4 @@ else
 fi
 
 cat .arg
+./earthly.sh +build-all-images
