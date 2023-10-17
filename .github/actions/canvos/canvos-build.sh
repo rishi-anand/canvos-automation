@@ -25,7 +25,7 @@ function create_arg_file() {
   echo "OS_DISTRIBUTION=${OS_PARTS[0]}" >> .arg
   echo "OS_VERSION=${OS_PARTS[1]}" >> .arg
   echo "K8S_DISTRIBUTION=$k8s_distribution" >> .arg
-  echo "ISO_NAME=$iso_name" >> .arg
+  echo "ISO_NAME=canvos-installer-$custom_image_tag" >> .arg
   echo "ARCH=$arch" >> .arg
 
   if [ -n "$base_image" ]; then
@@ -54,7 +54,7 @@ function build_artifacts() {
 }
 
 function upload_to_vsphere_datastore() {
-  govc datastore.upload build/"$iso_name".iso ISO/canvos-action/"$iso_name".iso
+  govc datastore.upload build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/"$iso_name".iso
 }
 
 function push_docker_images() {

@@ -12,16 +12,12 @@ on:
         default: v4.0.6
       custom_image_tag:
         type: string
-        description: Custom Image Tag
+        description: Custom Image Tag (ISO name would be 'canvos-installer-<custom_image_tag>.iso')
         default: edge
       image_registry:
         type: string
         description: Image Registry
         default: gcr.io/spectro-dev-public/edge-native
-#      image_repo:
-#        type: string
-#        description: Image Repo
-#        default: edge-native
       os_distribution:
         type: choice
         description: Choose the OS distribution
@@ -39,10 +35,6 @@ on:
           - k3s
           - rke2
         default: kubeadm
-      iso_name:
-        type: string
-        description: ISO Name
-        default: palette-edge-installer
       arch:
         type: choice
         description: Architecture
@@ -69,13 +61,13 @@ on:
           - OVA
           - RAW
         default: ISO
-#      upload_iso_to_s3:
-#        type: choice
-#        description: Upload ISO to S3
-#        options:
-#          - Yes
-#          - No
-#        default: No
+      upload_iso_to_s3:
+        type: choice
+        description: Upload ISO to S3
+        options:
+          - Yes
+          - No
+        default: No
 
 jobs:
   canvos:
@@ -93,7 +85,6 @@ jobs:
           image_registry: ${{ inputs.image_registry }}
           os_distribution: ${{ inputs.os_distribution }}
           k8s_distribution: ${{ inputs.k8s_distribution }}
-          iso_name: ${{ inputs.iso_name }}
           arch: ${{ inputs.arch }}
           base_image: ${{ inputs.base_image }}
           build_type: ${{ inputs.build_type }}
@@ -109,8 +100,7 @@ jobs:
           GOVC_NETWORK: ${{ secrets.GOVC_NETWORK }}
           GOVC_HOST: ${{ secrets.GOVC_HOST }}
           GOVC_CLUSTER: ${{ secrets.GOVC_CLUSTER }}
-          #upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
-          #image_repo: ${{ inputs.image_repo }}
+          upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
           
             
             

@@ -9,17 +9,11 @@ inputs:
     required: true
   image_registry:
     description: 'Image Registry'
-#  image_repo:
-#    description: 'Image Repo'
-#    required: true
   os_distribution:
     description: 'OS Distribution'
     required: true
   k8s_distribution:
     description: 'K8S Distribution'
-    required: true
-  iso_name:
-    description: 'ISO Name'
     required: true
   arch:
     description: 'Architecture'
@@ -32,9 +26,9 @@ inputs:
   output_artifact:
     description: 'Output Artifact Type'
     required: true
-#  upload_iso_to_s3:
-#    description: 'Upload ISO to S3'
-#    required: true
+  upload_iso_to_s3:
+    description: 'Upload ISO to S3'
+    required: true
 
 runs:
   using: 'composite'
@@ -47,7 +41,6 @@ runs:
         image_registry: ${{ inputs.image_registry }}
         os_distribution: ${{ inputs.os_distribution }}
         k8s_distribution: ${{ inputs.k8s_distribution }}
-        iso_name: ${{ inputs.iso_name }}
         arch: ${{ inputs.arch }}
         base_image: ${{ inputs.base_image }}
         build_type: ${{ inputs.build_type }}
@@ -63,8 +56,7 @@ runs:
         GOVC_NETWORK: ${{ inputs.GOVC_NETWORK }}
         GOVC_HOST: ${{ inputs.GOVC_HOST }}
         GOVC_CLUSTER: ${{ inputs.GOVC_CLUSTER }}
-        #upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
-        #image_repo: ${{ inputs.image_repo }}
+        upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
 
