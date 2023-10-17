@@ -64,6 +64,7 @@ function push_docker_images() {
     while read -r line; do
         image_name=$(echo "$line" | awk '{print $1}')
         image_tag=$(echo "$line" | awk '{print $2}')
+        echo "Pushing docker image $image_name:$image_tag"
         docker push "$image_name:$image_tag"
     done <<< "$image_list"
 }
