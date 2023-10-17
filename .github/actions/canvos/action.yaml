@@ -29,9 +29,9 @@ inputs:
   build_type:
     description: 'Build Type'
     required: true
-#  output_artifact:
-#    description: 'Output Artifact Type'
-#    required: true
+  output_artifact:
+    description: 'Output Artifact Type'
+    required: true
 #  upload_iso_to_s3:
 #    description: 'Upload ISO to S3'
 #    required: true
@@ -52,7 +52,7 @@ runs:
         arch: ${{ inputs.arch }}
         base_image: ${{ inputs.base_image }}
         build_type: ${{ inputs.build_type }}
-#        output_artifact: ${{ inputs.output_artifact }}
+        output_artifact: ${{ inputs.output_artifact }}
 #        upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
         GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ inputs.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
         GOVC_URL: ${{ inputs.GOVC_URL }}

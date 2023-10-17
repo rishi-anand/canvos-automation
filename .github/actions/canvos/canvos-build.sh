@@ -66,4 +66,3 @@ create_arg_file
 login_gcr
 build_artifacts
 upload_to_vsphere_datastore
-}
