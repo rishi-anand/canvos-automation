@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       canvos_tag:
-        type: string
-        description: CanvOS Tag
-        default: main
+        type: choice
+        description: Choose the CanvOS Tag
+        options:
+          - v4.0.6
+          - main
       custom_image_tag:
         type: string
         description: Custom Image Tag
