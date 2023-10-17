@@ -95,35 +95,36 @@ function push_docker_images() {
     echo "Pushed $DOCKER_IMAGES"
 }
 
-#notify() {
-#  ISO=ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
-#  CLI_RUN_CMD='./palette-edge-cli-linux-amd64 generate --os-flavor ubuntu-22 --k8s-flavor kubeadm --push-image-repository gcr.io/spectro-testing --spectro-version '$VERSION
-#  # shellcheck disable=SC2016
-#  MSG='"CUSTOM_TAG: `'$BRANCH'`\nVersion: `'$VERSION'`,`latest`\nStylus Image: `'$IMG_REPO'/stylus:'$VERSION'`\nISO Location (vsanDatastore1):`'$ISO'`\n\nLinux Palette Edge Content Cli link: '${CONTENT_CLI_LINK}'\n\nGit Head: ```'$GIT_MSG'```\nEdge Cli Sample Cmd: ```'$CLI_RUN_CMD'```"'
-#  PAYLOAD='
-#  {
-#    "blocks": [
-#      {
-#        "type": "section",
-#        "text": {
-#          "type": "mrkdwn",
-#          "text": "*Stylus Daily Build - '${TODAY}' *"
-#        }
-#      },
-#      {
-#        "type": "divider"
-#      },
-#      {
-#        "type": "section",
-#        "text": {
-#          "type": "mrkdwn",
-#          "text": '$MSG'
-#        }
-#      }
-#    ]
-#  }'
-#  curl -X POST -H 'Content-type: application/json' --data "$PAYLOAD" $CHANNEL_URL
-#}
+notify() {
+  TODAY=$(date '+%Y-%m-%d')
+  ISO_S3_LINK="Region: us-west-2, AWS Account: Dev User, Bucket: rishi-public-bucket, Path: canvos-action/canvos-installer-"$custom_image_tag".iso"
+  ISO=ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+  # shellcheck disable=SC2016
+  MSG='"ISO (vsanDatastore1): ```'$ISO'```\nISO S3 (ISO is private by default, make it public in s3 bucket to download): ```'$ISO_S3_LINK'```\nProvider Images: ```'$DOCKER_IMAGES'```"'
+  PAYLOAD='
+  {
+    "blocks": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*Stylus CanvOS Automation Build - '${TODAY}' - '${custom_image_tag}'*"
+        }
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": '$MSG'
+        }
+      }
+    ]
+  }'
+  curl -X POST -H 'Content-type: application/json' --data "$PAYLOAD" $SLACK_CHANNEL_URL
+}
 
 function clean() {
   sudo rm -rf $CANVOS_REPO/build/*
@@ -151,3 +152,5 @@ elif [ "$build_type" = "OVA" ]; then
 elif [ "$build_type" = "RAW" ]; then
   echo "Not supported yet"
 fi
+
+notify
