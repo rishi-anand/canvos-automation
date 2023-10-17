@@ -68,7 +68,7 @@ function push_docker_images() {
 
 function clean() {
   rm -rf build/*
-  docker system prune -a -y
+  docker system prune -a -f
 }
 
 git_clone

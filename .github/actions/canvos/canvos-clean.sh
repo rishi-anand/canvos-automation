@@ -5,7 +5,7 @@ set -x
 
 function clean() {
   rm -rf build/*
-  docker system prune -a -y
+  docker system prune -a -f
 }
 
 clean
