@@ -9,9 +9,9 @@ inputs:
     required: true
   image_registry:
     description: 'Image Registry'
-  image_repo:
-    description: 'Image Repo'
-    required: true
+#  image_repo:
+#    description: 'Image Repo'
+#    required: true
   os_distribution:
     description: 'OS Distribution'
     required: true
@@ -45,7 +45,7 @@ runs:
         canvos_tag: ${{ inputs.canvos_tag }}
         custom_image_tag: ${{ inputs.custom_image_tag }}
         image_registry: ${{ inputs.image_registry }}
-        image_repo: ${{ inputs.image_repo }}
+#        image_repo: ${{ inputs.image_repo }}
         os_distribution: ${{ inputs.os_distribution }}
         k8s_distribution: ${{ inputs.k8s_distribution }}
         iso_name: ${{ inputs.iso_name }}

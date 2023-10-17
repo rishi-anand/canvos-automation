@@ -5,6 +5,9 @@ set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 
+IMAGE_REGISTRY_VAR="${IMAGE_REGISTRY%/*}"
+IMAGE_REPO_VAR="${IMAGE_REGISTRY##*/}"
+
 function git_clone() {
   git clone https://github.com/spectrocloud/CanvOS.git
   cd CanvOS
@@ -17,8 +20,8 @@ function git_clone() {
 
 function create_arg_file() {
   echo "CUSTOM_TAG=$custom_image_tag" >> .arg
-  echo "IMAGE_REGISTRY=$image_registry" >> .arg
-  echo "IMAGE_REPO=$image_repo" >> .arg
+  echo "IMAGE_REGISTRY=$IMAGE_REGISTRY_VAR" >> .arg
+  echo "IMAGE_REPO=$IMAGE_REPO_VAR" >> .arg
   echo "OS_DISTRIBUTION=${OS_PARTS[0]}" >> .arg
   echo "OS_VERSION=${OS_PARTS[1]}" >> .arg
   echo "K8S_DISTRIBUTION=$k8s_distribution" >> .arg
