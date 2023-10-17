@@ -50,5 +50,6 @@ runs:
         base_image: ${{ inputs.base_image }}
         build_type: ${{ inputs.build_type }}
         output_artifact: ${{ inputs.output_artifact }}
+        GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
 
 
