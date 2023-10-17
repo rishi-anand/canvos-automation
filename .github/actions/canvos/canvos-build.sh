@@ -8,6 +8,8 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 IMAGE_REGISTRY_VAR="${image_registry%/*}"
 IMAGE_REPO_VAR="${image_registry##*/}"
 
+echo "Github username is $github_user"
+
 function git_clone() {
   git clone https://github.com/spectrocloud/CanvOS.git
   cd CanvOS
@@ -74,7 +76,7 @@ function clean() {
 git_clone
 create_arg_file
 login_gcr
-build_artifacts
+#build_artifacts
 push_docker_images
 
 if [ "$build_type" = "ISO-Provider" ]; then

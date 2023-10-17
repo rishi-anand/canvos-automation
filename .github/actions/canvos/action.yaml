@@ -59,6 +59,7 @@ runs:
         GOVC_HOST: ${{ inputs.GOVC_HOST }}
         GOVC_CLUSTER: ${{ inputs.GOVC_CLUSTER }}
         upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
+        github_user: ${{ inputs.github_user }}
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
     - shell: bash

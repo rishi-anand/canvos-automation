@@ -101,6 +101,7 @@ jobs:
           GOVC_HOST: ${{ secrets.GOVC_HOST }}
           GOVC_CLUSTER: ${{ secrets.GOVC_CLUSTER }}
           upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
+          github_user: ${{ github.actor }}
           
             
             
