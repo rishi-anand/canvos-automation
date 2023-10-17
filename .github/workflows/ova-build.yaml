@@ -50,7 +50,6 @@ on:
       base_image:
         type: string
         description: Base Image
-        default: base_image
 
 jobs:
   canvos:

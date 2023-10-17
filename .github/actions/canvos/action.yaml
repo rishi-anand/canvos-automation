@@ -1,6 +1,9 @@
 name: 'action'
 description: 'Run Robot Framework tests'
 inputs:
+  canvos_tag:
+    description: 'CanvOS Tag'
+    required: true
   custom_image_tag:
     description: 'Custom Image Tag'
     required: true
@@ -23,14 +26,22 @@ inputs:
     required: true
   base_image:
     description: 'Base Image'
-    required: true
 
 runs:
   using: 'composite'
   steps:
     - shell: bash
       run: ./.github/actions/canvos/canvos-build.sh
-#      env:
-#        GH_ACCESS_TOKEN: ${{ inputs.gh_access_token }}
+      env:
+        GH_ACCESS_TOKEN: ${{ inputs.gh_access_token }}
+        CANVOS_TAG: ${{ inputs.canvos_tag }}
+        CUSTOM_IMAGE_TAG: ${{ inputs.custom_image_tag }}
+        IMAGE_REGISTRY: ${{ inputs.image_registry }}
+        IMAGE_REPO: ${{ inputs.image_repo }}
+        OS_DISTRIBUTION: ${{ inputs.os_distribution }}
+        K8S_DISTRIBUTION: ${{ inputs.k8s_distribution }}
+        ISO_NAME: ${{ inputs.iso_name }}
+        ARCH: ${{ inputs.arch }}
+        BASE_IMAGE: ${{ inputs.base_image }}
 
 
