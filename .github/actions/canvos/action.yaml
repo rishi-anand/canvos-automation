@@ -60,7 +60,7 @@ runs:
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
     - shell: bash
-      run: rm -rf ${{ github.workspace }}/*
+      run: sudo rm -rf ${{ github.workspace }}/*
       
 
 
