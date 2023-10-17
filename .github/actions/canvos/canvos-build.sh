@@ -41,7 +41,6 @@ function login_gcr() {
 }
 
 function build_artifacts() {
-  build_type
   if [ "$build_type" = "ISO-Provider" ]; then
     echo "Building ISO & Provider Images"
     ./earthly.sh --push +build-all-images
