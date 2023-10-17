@@ -75,5 +75,6 @@ git_clone
 create_arg_file
 login_gcr
 build_artifacts
+push_docker_images
 upload_to_vsphere_datastore
 clean
