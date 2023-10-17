@@ -7,20 +7,25 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 
 IMAGE_REGISTRY_VAR="${image_registry%/*}"
 IMAGE_REPO_VAR="${image_registry##*/}"
+WORKDIR=$(pwd)
+CANVOS_REPO=$WORKDIR/CanvOS
+IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
 
 echo "Github username is $github_user"
 custom_image_tag=$github_user-$custom_image_tag
 echo "Custom github tag is $custom_image_tag"
 
-function git_clone() {
+function git_clone_canvos() {
   git clone https://github.com/spectrocloud/CanvOS.git
-  cd CanvOS
+  cd $CANVOS_REPO
   ls
   if [ -n "$canvos_tag" ]; then
     echo "The environment variable is not empty: $canvos_tag"
     git checkout $canvos_tag
   fi
 }
+
+# -------------------- ISO ------------------
 
 function create_arg_file() {
   echo "CUSTOM_TAG=$custom_image_tag" >> .arg
@@ -57,8 +62,24 @@ function build_artifacts() {
   fi
 }
 
+# -------------------- VMDK ------------------
+function git_clone_stylus_image_builder() {
+  git clone https://github.com/spectrocloud/stylus-image-builder.git
+  cd $IMAGE_BUILDER_REPO
+  ls
+}
+
+
+# -------------------- Content Push ------------------
+
 function upload_to_vsphere_datastore() {
-  govc datastore.upload build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+  govc datastore.upload $CANVOS_REPO/build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+}
+
+function upload_iso_to_s3() {
+  if [ "$upload_iso_to_s3" = "true" ]; then
+    aws s3 cp $CANVOS_REPO/build/canvos-installer-"$custom_image_tag".iso s3://rishi-public-bucket/canvos-action
+  fi
 }
 
 function push_docker_images() {
@@ -72,18 +93,28 @@ function push_docker_images() {
 }
 
 function clean() {
-  sudo rm -rf build/*
+  sudo rm -rf $CANVOS_REPO/build/*
   docker system prune -a -f
 }
 
-git_clone
+# -------------------- Executions ------------------
+git_clone_canvos
 create_arg_file
 login_gcr
 build_artifacts
 push_docker_images
 
 if [ "$build_type" = "ISO-Provider" ]; then
+  upload_iso_to_s3
   upload_to_vsphere_datastore
 fi
 
-clean
+if [ "$output_artifact" = "ISO" ]; then
+  clean
+elif [ "$build_type" = "VMDK" ]; then
+  echo "Not supported yet"
+elif [ "$build_type" = "OVA" ]; then
+  echo "Not supported yet"
+elif [ "$build_type" = "RAW" ]; then
+  echo "Not supported yet"
+fi

@@ -47,6 +47,8 @@ runs:
         base_image: ${{ inputs.base_image }}
         build_type: ${{ inputs.build_type }}
         output_artifact: ${{ inputs.output_artifact }}
+        upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
+        github_user: ${{ inputs.github_user }}
         GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ inputs.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
         GOVC_URL: ${{ inputs.GOVC_URL }}
         GOVC_INSECURE: ${{ inputs.GOVC_INSECURE }}
@@ -58,8 +60,9 @@ runs:
         GOVC_NETWORK: ${{ inputs.GOVC_NETWORK }}
         GOVC_HOST: ${{ inputs.GOVC_HOST }}
         GOVC_CLUSTER: ${{ inputs.GOVC_CLUSTER }}
-        upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
-        github_user: ${{ inputs.github_user }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
     - shell: bash

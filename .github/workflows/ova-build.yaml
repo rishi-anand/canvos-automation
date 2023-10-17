@@ -89,6 +89,8 @@ jobs:
           base_image: ${{ inputs.base_image }}
           build_type: ${{ inputs.build_type }}
           output_artifact: ${{ inputs.output_artifact }}
+          upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
+          github_user: ${{ github.actor }}
           GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
           GOVC_URL: ${{ secrets.GOVC_URL }}
           GOVC_INSECURE: ${{ secrets.GOVC_INSECURE }}
@@ -100,8 +102,8 @@ jobs:
           GOVC_NETWORK: ${{ secrets.GOVC_NETWORK }}
           GOVC_HOST: ${{ secrets.GOVC_HOST }}
           GOVC_CLUSTER: ${{ secrets.GOVC_CLUSTER }}
-          upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
-          github_user: ${{ github.actor }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           
             
             
