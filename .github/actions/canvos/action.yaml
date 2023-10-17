@@ -59,5 +59,8 @@ runs:
         upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
+    - shell: bash
+      run: rm -rf ${{ github.workspace }}/*
+      
 
 
