@@ -55,10 +55,20 @@ function build_artifacts() {
 
 function clean() {
   rm -rf build/*
+  docker system prune -a -y
 }
 
 function upload_to_vsphere_datastore() {
   govc datastore.upload "$iso_name".iso ISO/canvos-action/"$iso_name".iso
+}
+
+function push_docker_images() {
+    image_list=$(docker images | grep $custom_image_tag)
+    while read -r line; do
+        image_name=$(echo "$line" | awk '{print $1}')
+        image_tag=$(echo "$line" | awk '{print $2}')
+        docker push "$image_name:$image_tag"
+    done <<< "$image_list"
 }
 
 git_clone
