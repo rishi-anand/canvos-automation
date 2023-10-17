@@ -32,6 +32,9 @@ inputs:
   output_artifact:
     description: 'Output Artifact Type'
     required: true
+  upload_iso_to_s3:
+    description: 'Upload ISO to S3'
+    required: true
 
 runs:
   using: 'composite'
@@ -50,6 +53,16 @@ runs:
         base_image: ${{ inputs.base_image }}
         build_type: ${{ inputs.build_type }}
         output_artifact: ${{ inputs.output_artifact }}
+        upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
         GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
+        VSPHERE_URL: ${{ secrets.VSPHERE_URL }}
+        VSPHERE_USERNAME: ${{ secrets.VSPHERE_USERNAME }}
+        VSPHERE_PASSWORD: ${{ secrets.VSPHERE_PASSWORD }}
+        VSPHERE_FOLDER: ${{ secrets.VSPHERE_FOLDER }}
+        VSPHERE_DATACENTER: ${{ secrets.VSPHERE_DATACENTER }}
+        VSPHERE_DATASTORE: ${{ secrets.VSPHERE_DATASTORE }}
+        VSPHERE_NETWORK: ${{ secrets.VSPHERE_NETWORK }}
+        VSPHERE_HOST: ${{ secrets.VSPHERE_HOST }}
+        VSPHERE_CLUSTER: ${{ secrets.VSPHERE_CLUSTER }}
 
 
