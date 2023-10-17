@@ -51,7 +51,12 @@ function build_artifacts() {
   fi
 }
 
+function upload_to_vsphere_datastore() {
+  govc datastore.upload "$iso_name".iso ISO/canvos-action/"$iso_name".iso
+}
+
 git_clone
 create_arg_file
 login_gcr
 build_artifacts
+upload_to_vsphere_datastore
