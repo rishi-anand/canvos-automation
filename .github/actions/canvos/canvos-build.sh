@@ -9,6 +9,8 @@ IMAGE_REGISTRY_VAR="${image_registry%/*}"
 IMAGE_REPO_VAR="${image_registry##*/}"
 
 echo "Github username is $github_user"
+custom_image_tag=$github_user-$custom_image_tag
+echo "Custom github tag is $custom_image_tag"
 
 function git_clone() {
   git clone https://github.com/spectrocloud/CanvOS.git
