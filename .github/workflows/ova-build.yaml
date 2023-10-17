@@ -60,22 +60,22 @@ on:
           - ISO-Provider
           - Provider
         default: ISO-Provider
-      output_artifact:
-        type: choice
-        description: Output Artifact Type
-        options:
-          - ISO
-          - VMDK
-          - OVA
-          - RAW
-        default: ISO
-      upload_iso_to_s3:
-        type: choice
-        description: Upload ISO to S3
-        options:
-          - Yes
-          - No
-        default: No
+#      output_artifact:
+#        type: choice
+#        description: Output Artifact Type
+#        options:
+#          - ISO
+#          - VMDK
+#          - OVA
+#          - RAW
+#        default: ISO
+#      upload_iso_to_s3:
+#        type: choice
+#        description: Upload ISO to S3
+#        options:
+#          - Yes
+#          - No
+#        default: No
 
 jobs:
   canvos:
@@ -98,8 +98,8 @@ jobs:
           arch: ${{ inputs.arch }}
           base_image: ${{ inputs.base_image }}
           build_type: ${{ inputs.build_type }}
-          output_artifact: ${{ inputs.output_artifact }}
-          upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
+#          output_artifact: ${{ inputs.output_artifact }}
+#          upload_iso_to_s3: ${{ inputs.upload_iso_to_s3 }}
           GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
           GOVC_URL: ${{ secrets.GOVC_URL }}
           GOVC_INSECURE: ${{ secrets.GOVC_INSECURE }}
