@@ -1,6 +1,6 @@
 # Create reports folder
 
-set -e
+#set -e
 set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
@@ -51,6 +51,10 @@ function build_artifacts() {
   fi
 }
 
+function clean() {
+  rm -rf build/*
+}
+
 function upload_to_vsphere_datastore() {
   govc datastore.upload "$iso_name".iso ISO/canvos-action/"$iso_name".iso
 }
@@ -60,3 +64,4 @@ create_arg_file
 login_gcr
 build_artifacts
 upload_to_vsphere_datastore
+}
