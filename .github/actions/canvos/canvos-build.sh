@@ -46,20 +46,15 @@ function login_gcr() {
 function build_artifacts() {
   if [ "$build_type" = "ISO-Provider" ]; then
     echo "Building ISO & Provider Images"
-    ./earthly.sh --push +build-all-images
+    ./earthly.sh +build-all-images
   elif [ "$build_type" = "Provider" ]; then
     echo "Building only Provider Images"
-    ./earthly.sh --push +build-provider-images
+    ./earthly.sh +build-provider-images
   fi
 }
 
-function clean() {
-  rm -rf build/*
-  docker system prune -a -y
-}
-
 function upload_to_vsphere_datastore() {
-  govc datastore.upload "$iso_name".iso ISO/canvos-action/"$iso_name".iso
+  govc datastore.upload build/"$iso_name".iso ISO/canvos-action/"$iso_name".iso
 }
 
 function push_docker_images() {
@@ -71,8 +66,14 @@ function push_docker_images() {
     done <<< "$image_list"
 }
 
+function clean() {
+  rm -rf build/*
+  docker system prune -a -y
+}
+
 git_clone
 create_arg_file
 login_gcr
 build_artifacts
 upload_to_vsphere_datastore
+clean
