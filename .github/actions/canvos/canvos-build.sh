@@ -58,7 +58,7 @@ function upload_to_vsphere_datastore() {
 }
 
 function push_docker_images() {
-    image_list=$(docker images | grep $custom_image_tag)
+    image_list=$(docker images | grep $custom_image_tag | grep $IMAGE_REGISTRY_VAR)
     while read -r line; do
         image_name=$(echo "$line" | awk '{print $1}')
         image_tag=$(echo "$line" | awk '{print $2}')
@@ -76,5 +76,9 @@ create_arg_file
 login_gcr
 build_artifacts
 push_docker_images
-upload_to_vsphere_datastore
+
+if [ "$build_type" = "ISO-Provider" ]; then
+  upload_to_vsphere_datastore
+fi
+
 clean
