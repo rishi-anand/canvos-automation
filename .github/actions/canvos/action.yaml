@@ -26,6 +26,12 @@ inputs:
     required: true
   base_image:
     description: 'Base Image'
+  build_type:
+    description: 'Build Type'
+    required: true
+  output_artifact:
+    description: 'Output Artifact Type'
+    required: true
 
 runs:
   using: 'composite'
@@ -42,5 +48,7 @@ runs:
         iso_name: ${{ inputs.iso_name }}
         arch: ${{ inputs.arch }}
         base_image: ${{ inputs.base_image }}
+        build_type: ${{ inputs.build_type }}
+        output_artifact: ${{ inputs.output_artifact }}
 
 

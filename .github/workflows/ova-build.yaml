@@ -53,6 +53,22 @@ on:
       base_image:
         type: string
         description: Base Image
+      build_type:
+        type: choice
+        description: Build Type
+        options:
+          - ISO-Provider
+          - Provider
+        default: ISO-Provider
+      output_artifact:
+        type: choice
+        description: Output Artifact Type
+        options:
+          - ISO
+          - VMDK
+          - OVA
+          - RAW
+        default: ISO
 
 jobs:
   canvos:
@@ -74,5 +90,7 @@ jobs:
           iso_name: ${{ inputs.iso_name }}
           arch: ${{ inputs.arch }}
           base_image: ${{ inputs.base_image }}
+          build_type: ${{ inputs.build_type }}
+          output_artifact: ${{ inputs.output_artifact }}
             
             
