@@ -56,7 +56,7 @@ function build_artifacts() {
 }
 
 function upload_to_vsphere_datastore() {
-  govc datastore.upload build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/"$iso_name".iso
+  govc datastore.upload build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
 }
 
 function push_docker_images() {
