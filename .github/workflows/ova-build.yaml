@@ -1,4 +1,4 @@
-name: Test to Run Edge Native Cases
+name: CanvOS Build
 
 on:
   workflow_dispatch:
