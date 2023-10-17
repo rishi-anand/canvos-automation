@@ -9,6 +9,7 @@ on:
         options:
           - v4.0.6
           - main
+        default: v4.0.6
       custom_image_tag:
         type: string
         description: Custom Image Tag
