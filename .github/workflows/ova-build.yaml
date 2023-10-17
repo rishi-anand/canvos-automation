@@ -65,3 +65,14 @@ jobs:
         uses: ./.github/actions/canvos
         with:
           environment: "US_DC"
+          canvos_tag: ${{ inputs.canvos_tag }}
+          custom_image_tag: ${{ inputs.custom_image_tag }}
+          image_registry: ${{ inputs.image_registry }}
+          image_repo: ${{ inputs.image_repo }}
+          os_distribution: ${{ inputs.os_distribution }}
+          k8s_distribution: ${{ inputs.k8s_distribution }}
+          iso_name: ${{ inputs.iso_name }}
+          arch: ${{ inputs.arch }}
+          base_image: ${{ inputs.base_image }}
+            
+            

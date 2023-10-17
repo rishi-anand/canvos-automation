@@ -33,15 +33,14 @@ runs:
     - shell: bash
       run: ./.github/actions/canvos/canvos-build.sh
       env:
-        GH_ACCESS_TOKEN: ${{ inputs.gh_access_token }}
-        CANVOS_TAG: ${{ inputs.canvos_tag }}
-        CUSTOM_IMAGE_TAG: ${{ inputs.custom_image_tag }}
-        IMAGE_REGISTRY: ${{ inputs.image_registry }}
-        IMAGE_REPO: ${{ inputs.image_repo }}
-        OS_DISTRIBUTION: ${{ inputs.os_distribution }}
-        K8S_DISTRIBUTION: ${{ inputs.k8s_distribution }}
-        ISO_NAME: ${{ inputs.iso_name }}
-        ARCH: ${{ inputs.arch }}
-        BASE_IMAGE: ${{ inputs.base_image }}
+        canvos_tag: ${{ inputs.canvos_tag }}
+        custom_image_tag: ${{ inputs.custom_image_tag }}
+        image_registry: ${{ inputs.image_registry }}
+        image_repo: ${{ inputs.image_repo }}
+        os_distribution: ${{ inputs.os_distribution }}
+        k8s_distribution: ${{ inputs.k8s_distribution }}
+        iso_name: ${{ inputs.iso_name }}
+        arch: ${{ inputs.arch }}
+        base_image: ${{ inputs.base_image }}
 
 
