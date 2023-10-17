@@ -74,7 +74,7 @@ function clean() {
 git_clone
 create_arg_file
 login_gcr
-#build_artifacts
+build_artifacts
 push_docker_images
 
 if [ "$build_type" = "ISO-Provider" ]; then
