@@ -1,0 +1,36 @@
+name: 'action'
+description: 'Run Robot Framework tests'
+inputs:
+  custom_image_tag:
+    description: 'Custom Image Tag'
+    required: true
+  image_registry:
+    description: 'Image Registry'
+  image_repo:
+    description: 'Image Repo'
+    required: true
+  os_distribution:
+    description: 'OS Distribution'
+    required: true
+  k8s_distribution:
+    description: 'K8S Distribution'
+    required: true
+  iso_name:
+    description: 'ISO Name'
+    required: true
+  arch:
+    description: 'Architecture'
+    required: true
+  base_image:
+    description: 'Base Image'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: ./.github/actions/canvos/canvos-build.sh
+#      env:
+#        GH_ACCESS_TOKEN: ${{ inputs.gh_access_token }}
+
+

@@ -1,0 +1,65 @@
+name: Test to Run Edge Native Cases
+
+on:
+  workflow_dispatch:
+    inputs:
+      canvos_tag:
+        type: string
+        description: CanvOS Tag
+        default: main
+      custom_image_tag:
+        type: string
+        description: Custom Image Tag
+        default: edge
+      image_registry:
+        type: string
+        description: Image Registry
+        default: gcr.io/spectro-dev-public
+      image_repo:
+        type: string
+        description: Image Repo
+        default: edge-native
+      os_distribution:
+        type: choice
+        description: Choose the OS distribution
+        options:
+          - ubuntu+20
+          - ubuntu+22
+          - opensuse-leap+15.4
+        default: ubuntu+22
+      k8s_distribution:
+        type: choice
+        description: Choose the K8S distribution
+        options:
+          - kubeadm
+          - kubeadm-fips
+          - k3s
+          - rke2
+        default: kubeadm
+      iso_name:
+        type: string
+        description: ISO Name
+        default: palette-edge-installer
+      arch:
+        type: choice
+        description: Architecture
+        options:
+          - amd64
+          - arm64
+        default: amd64
+      base_image:
+        type: string
+        description: Base Image
+        default: base_image
+
+jobs:
+  canvos:
+    runs-on: "canvos-build"
+    timeout-minutes: 240
+    environment: "US_DC"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        uses: ./.github/actions/canvos
+        with:
+          environment: "US_DC"
