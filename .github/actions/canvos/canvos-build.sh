@@ -10,6 +10,7 @@ IMAGE_REPO_VAR="${image_registry##*/}"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
+DOCKER_IMAGES=
 
 echo "Github username is $github_user"
 custom_image_tag=$github_user-$custom_image_tag
@@ -83,14 +84,46 @@ function upload_iso_to_s3() {
 }
 
 function push_docker_images() {
-    image_list=$(docker images | grep $custom_image_tag | grep $IMAGE_REGISTRY_VAR)
+    image_list=$(docker images | grep $custom_image_tag | grep $IMAGE_REGISTRY_VAR | grep -v linux)
     while read -r line; do
         image_name=$(echo "$line" | awk '{print $1}')
         image_tag=$(echo "$line" | awk '{print $2}')
         echo "Pushing docker image $image_name:$image_tag"
         docker push "$image_name:$image_tag"
+        DOCKER_IMAGES="$image_name:$image_tag\n$DOCKER_IMAGES"
     done <<< "$image_list"
+    echo "Pushed $DOCKER_IMAGES"
 }
+
+#notify() {
+#  ISO=ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+#  CLI_RUN_CMD='./palette-edge-cli-linux-amd64 generate --os-flavor ubuntu-22 --k8s-flavor kubeadm --push-image-repository gcr.io/spectro-testing --spectro-version '$VERSION
+#  # shellcheck disable=SC2016
+#  MSG='"CUSTOM_TAG: `'$BRANCH'`\nVersion: `'$VERSION'`,`latest`\nStylus Image: `'$IMG_REPO'/stylus:'$VERSION'`\nISO Location (vsanDatastore1):`'$ISO'`\n\nLinux Palette Edge Content Cli link: '${CONTENT_CLI_LINK}'\n\nGit Head: ```'$GIT_MSG'```\nEdge Cli Sample Cmd: ```'$CLI_RUN_CMD'```"'
+#  PAYLOAD='
+#  {
+#    "blocks": [
+#      {
+#        "type": "section",
+#        "text": {
+#          "type": "mrkdwn",
+#          "text": "*Stylus Daily Build - '${TODAY}' *"
+#        }
+#      },
+#      {
+#        "type": "divider"
+#      },
+#      {
+#        "type": "section",
+#        "text": {
+#          "type": "mrkdwn",
+#          "text": '$MSG'
+#        }
+#      }
+#    ]
+#  }'
+#  curl -X POST -H 'Content-type: application/json' --data "$PAYLOAD" $CHANNEL_URL
+#}
 
 function clean() {
   sudo rm -rf $CANVOS_REPO/build/*
