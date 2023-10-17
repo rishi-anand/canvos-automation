@@ -5,8 +5,8 @@ set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 
-IMAGE_REGISTRY_VAR="${IMAGE_REGISTRY%/*}"
-IMAGE_REPO_VAR="${IMAGE_REGISTRY##*/}"
+IMAGE_REGISTRY_VAR="${image_registry%/*}"
+IMAGE_REPO_VAR="${image_registry##*/}"
 
 function git_clone() {
   git clone https://github.com/spectrocloud/CanvOS.git
