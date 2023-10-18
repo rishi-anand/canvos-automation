@@ -5,12 +5,11 @@ set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 
-IMAGE_REGISTRY_VAR="${image_registry%/*}"
-IMAGE_REPO_VAR="${image_registry##*/}"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
 DOCKER_IMAGES=
+ARGS_FILE=
 
 echo "Github username is $github_user"
 custom_image_tag=$github_user-$custom_image_tag
@@ -27,11 +26,10 @@ function git_clone_canvos() {
 }
 
 # -------------------- ISO ------------------
-
 function create_arg_file() {
   echo "CUSTOM_TAG=$custom_image_tag" >> .arg
-  echo "IMAGE_REGISTRY=$IMAGE_REGISTRY_VAR" >> .arg
-  echo "IMAGE_REPO=$IMAGE_REPO_VAR" >> .arg
+  echo "IMAGE_REGISTRY=$image_registry" >> .arg
+  echo "IMAGE_REPO=${OS_PARTS[0]}-${OS_PARTS[1]}" >> .arg
   echo "OS_DISTRIBUTION=${OS_PARTS[0]}" >> .arg
   echo "OS_VERSION=${OS_PARTS[1]}" >> .arg
   echo "K8S_DISTRIBUTION=$k8s_distribution" >> .arg
@@ -46,6 +44,7 @@ function create_arg_file() {
   fi
 
   cat .arg
+  ARGS_FILE=$(cat .arg)
 }
 
 function login_gcr() {
@@ -69,7 +68,7 @@ function git_clone_stylus_image_builder() {
   cd $IMAGE_BUILDER_REPO
   ls
 }
-
+# WIP
 
 # -------------------- Content Push ------------------
 
@@ -100,7 +99,7 @@ notify() {
   ISO_S3_LINK="Region: us-west-2, AWS Account: Dev User, Bucket: rishi-public-bucket, Path: canvos-action/canvos-installer-"$custom_image_tag".iso"
   ISO=ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
   # shellcheck disable=SC2016
-  MSG='"ISO (vsanDatastore1): ```'$ISO'```\nISO S3 (ISO is private by default, make it public in s3 bucket to download): ```'$ISO_S3_LINK'```\nProvider Images: ```'$DOCKER_IMAGES'```"'
+  MSG='"ISO (vsanDatastore1): ```'$ISO'```\nISO S3 (ISO is private by default, make it public in s3 bucket to download): ```'$ISO_S3_LINK'```\nProvider Images: ```'$DOCKER_IMAGES'```\nArgs: ```'$ARGS_FILE'```"'
   PAYLOAD='
   {
     "blocks": [
