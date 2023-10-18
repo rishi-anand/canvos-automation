@@ -8,6 +8,7 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
+ISO_NAME=canvos-${OS_PARTS[0]}-${OS_PARTS[1]}-$custom_image_tag
 DOCKER_IMAGES=
 ARGS_FILE=
 
@@ -33,7 +34,7 @@ function create_arg_file() {
   echo "OS_DISTRIBUTION=${OS_PARTS[0]}" >> .arg
   echo "OS_VERSION=${OS_PARTS[1]}" >> .arg
   echo "K8S_DISTRIBUTION=$k8s_distribution" >> .arg
-  echo "ISO_NAME=canvos-installer-$custom_image_tag" >> .arg
+  echo "ISO_NAME=$ISO_NAME" >> .arg
   echo "ARCH=$arch" >> .arg
 
   if [ -n "$base_image" ]; then
@@ -73,12 +74,12 @@ function git_clone_stylus_image_builder() {
 # -------------------- Content Push ------------------
 
 function upload_to_vsphere_datastore() {
-  govc datastore.upload $CANVOS_REPO/build/canvos-installer-"$custom_image_tag".iso ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+  govc datastore.upload $CANVOS_REPO/build/"$ISO_NAME".iso ISO/canvos-action/"$ISO_NAME".iso
 }
 
 function upload_iso_to_s3() {
   if [ "$upload_iso_to_s3" = "true" ]; then
-    aws s3 cp $CANVOS_REPO/build/canvos-installer-"$custom_image_tag".iso s3://rishi-public-bucket/canvos-action
+    aws s3 cp $CANVOS_REPO/build/"$ISO_NAME".iso s3://rishi-public-bucket/canvos-action
   fi
 }
 
@@ -97,7 +98,7 @@ function push_docker_images() {
 notify() {
   TODAY=$(date '+%Y-%m-%d')
   ISO_S3_LINK="Region: us-west-2, AWS Account: Dev User, Bucket: rishi-public-bucket, Path: canvos-action/canvos-installer-"$custom_image_tag".iso"
-  ISO=ISO/canvos-action/canvos-installer-"$custom_image_tag".iso
+  ISO=ISO/canvos-action/"$ISO_NAME".iso
   # shellcheck disable=SC2016
   MSG='"ISO (vsanDatastore1): ```'$ISO'```\nISO S3 (ISO is private by default, make it public in s3 bucket to download): ```'$ISO_S3_LINK'```\nProvider Images: ```'$DOCKER_IMAGES'```\nArgs: ```'$ARGS_FILE'```"'
   PAYLOAD='
