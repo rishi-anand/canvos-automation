@@ -178,7 +178,7 @@ if [ "$output_artifact" = "ISO" ]; then
   clean
 elif [ "$build_type" = "VMDK" ]; then
   echo "Not supported yet"
-  git_clone_stylus_image_builder
+  run_build_vmdk_step
 
 elif [ "$build_type" = "OVA" ]; then
   echo "Not supported yet"
