@@ -8,7 +8,8 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
-ISO_NAME=canvos-${OS_PARTS[0]}-${OS_PARTS[1]}-$custom_image_tag
+ISO_NAME=canvos-e-${OS_PARTS[1]}-$custom_image_tag
+S3_FOLDER="s3://rishi-public-bucket/canvos-action/${OS_PARTS[0]}-${OS_PARTS[1]}-$github_user-$canvos_tag"
 DOCKER_IMAGES=
 ARGS_FILE=
 
@@ -89,7 +90,7 @@ function build_vmdk() {
 
 function upload_vmdk_to_s3() {
   if [ "$upload_vmdk_to_s3" = "true" ]; then
-    aws s3 cp $IMAGE_BUILDER_REPO/build/canvos-installer-"$custom_image_tag".vmdk s3://rishi-public-bucket/canvos-action
+    aws s3 cp $IMAGE_BUILDER_REPO/build/canvos-installer-"$custom_image_tag".vmdk $S3_FOLDER/canvos-$custom_image_tag.vmdk
   fi
 }
 
@@ -110,7 +111,7 @@ function upload_to_vsphere_datastore() {
 
 function upload_iso_to_s3() {
   if [ "$upload_iso_to_s3" = "true" ]; then
-    aws s3 cp $CANVOS_REPO/build/"$ISO_NAME".iso s3://rishi-public-bucket/canvos-action
+    aws s3 cp $CANVOS_REPO/build/"$ISO_NAME".iso $S3_FOLDER/canvos-$custom_image_tag.iso
   fi
 }
 
@@ -177,9 +178,7 @@ fi
 if [ "$output_artifact" = "ISO" ]; then
   clean
 elif [ "$build_type" = "VMDK" ]; then
-  echo "Not supported yet"
   run_build_vmdk_step
-
 elif [ "$build_type" = "OVA" ]; then
   echo "Not supported yet"
 elif [ "$build_type" = "RAW" ]; then
