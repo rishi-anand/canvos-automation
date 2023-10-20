@@ -14,7 +14,7 @@ ARGS_FILE=
 
 echo "Github username is $github_user"
 custom_image_tag=$github_user-$custom_image_tag
-echo "Custom github tag is $custom_image_tag"
+echo "Custom github tag is $custom_image_tag & build type is $build_type"
 
 function git_clone_canvos() {
   git clone https://github.com/spectrocloud/CanvOS.git
