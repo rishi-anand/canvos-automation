@@ -184,11 +184,11 @@ copy_iso
 
 if [ "$output_artifact" = "ISO" ]; then
   clean
-elif [ "$build_type" = "VMDK" ]; then
+elif [ "$output_artifact" = "VMDK" ]; then
   run_build_vmdk_step
-elif [ "$build_type" = "OVA" ]; then
+elif [ "$output_artifact" = "OVA" ]; then
   echo "Not supported yet"
-elif [ "$build_type" = "RAW" ]; then
+elif [ "$output_artifact" = "RAW" ]; then
   echo "Not supported yet"
 fi
 
