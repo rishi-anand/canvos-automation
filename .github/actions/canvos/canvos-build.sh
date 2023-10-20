@@ -115,7 +115,7 @@ function upload_iso_to_s3() {
 }
 
 function push_docker_images() {
-    image_list=$(docker images | grep $custom_image_tag | grep $IMAGE_REGISTRY_VAR | grep -v linux)
+    image_list=$(docker images | grep $custom_image_tag | grep $image_registry | grep -v linux)
     while read -r line; do
         image_name=$(echo "$line" | awk '{print $1}')
         image_tag=$(echo "$line" | awk '{print $2}')
