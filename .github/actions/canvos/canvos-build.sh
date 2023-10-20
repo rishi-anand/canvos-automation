@@ -69,7 +69,38 @@ function git_clone_stylus_image_builder() {
   cd $IMAGE_BUILDER_REPO
   ls
 }
-# WIP
+
+function prepare_image_builder() {
+  export EMBED=false
+  export REPO=spectrocloud/stylus-image-builder
+  export TAG=latest
+  export CONTAINER_NAME=stylus-image-builder
+
+  cp $CANVOS_REPO/build/"$ISO_NAME".iso $IMAGE_BUILDER_REPO
+}
+
+function build_image_builder_image() {
+  make docker-build
+}
+
+function build_vmdk() {
+  make vmdk
+}
+
+function upload_vmdk_to_s3() {
+  if [ "$upload_vmdk_to_s3" = "true" ]; then
+    aws s3 cp $IMAGE_BUILDER_REPO/build/canvos-installer-"$custom_image_tag".vmdk s3://rishi-public-bucket/canvos-action
+  fi
+}
+
+function run_build_vmdk_step() {
+  cd $WORKDIR
+  git_clone_stylus_image_builder
+  prepare_image_builder
+  build_image_builder_image
+  build_vmdk
+  upload_vmdk_to_s3
+}
 
 # -------------------- Content Push ------------------
 
@@ -147,6 +178,8 @@ if [ "$output_artifact" = "ISO" ]; then
   clean
 elif [ "$build_type" = "VMDK" ]; then
   echo "Not supported yet"
+  git_clone_stylus_image_builder
+
 elif [ "$build_type" = "OVA" ]; then
   echo "Not supported yet"
 elif [ "$build_type" = "RAW" ]; then
