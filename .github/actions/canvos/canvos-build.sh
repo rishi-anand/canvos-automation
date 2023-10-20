@@ -8,7 +8,7 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
-ISO_NAME=canvos-e-${OS_PARTS[1]}-$custom_image_tag
+ISO_NAME=canvos-${OS_PARTS[0]}-${OS_PARTS[1]}-$custom_image_tag
 S3_FOLDER="s3://rishi-public-bucket/canvos-action/${OS_PARTS[0]}-${OS_PARTS[1]}-$github_user-$canvos_tag"
 DOCKER_IMAGES=
 ARGS_FILE=
@@ -29,7 +29,7 @@ function git_clone_canvos() {
 
 function copy_iso() {
   mkdir -p $CANVOS_REPO/build
-  cp /home/ubuntu/data/canvos-ubuntu-22-vmdk-test.iso $CANVOS_REPO/build
+  cp /home/ubuntu/data/"$ISO_NAME".iso $CANVOS_REPO/build
 }
 
 # -------------------- ISO ------------------
