@@ -27,11 +27,6 @@ function git_clone_canvos() {
   fi
 }
 
-function copy_iso() {
-  mkdir -p $CANVOS_REPO/build
-  cp /home/ubuntu/data/canvos-ubuntu-22-vmdk-test.iso $CANVOS_REPO/build
-}
-
 # -------------------- ISO ------------------
 function create_arg_file() {
   echo "CUSTOM_TAG=$custom_image_tag" >> .arg
@@ -172,15 +167,13 @@ function clean() {
 git_clone_canvos
 create_arg_file
 login_gcr
-#build_artifacts
-#push_docker_images
-#
-#if [ "$build_type" = "ISO-Provider" ]; then
-#  upload_iso_to_s3
-#  upload_to_vsphere_datastore
-#fi
+build_artifacts
+push_docker_images
 
-copy_iso
+if [ "$build_type" = "ISO-Provider" ]; then
+  upload_iso_to_s3
+  upload_to_vsphere_datastore
+fi
 
 if [ "$output_artifact" = "ISO" ]; then
   clean
