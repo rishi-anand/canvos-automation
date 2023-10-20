@@ -73,6 +73,7 @@ function build_artifacts() {
 function git_clone_stylus_image_builder() {
   git clone https://github.com/spectrocloud/stylus-image-builder.git
   cd $IMAGE_BUILDER_REPO
+  git checkout user-data
   ls
 }
 
