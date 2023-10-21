@@ -8,6 +8,7 @@ IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder
+OVA_BUILDER_REPO=$WORKDIR/ova
 ISO_NAME=canvos-${OS_PARTS[0]}-${OS_PARTS[1]}-$custom_image_tag
 S3_FOLDER="s3://rishi-public-bucket/canvos-action/${OS_PARTS[0]}-${OS_PARTS[1]}-$github_user-$canvos_tag"
 DOCKER_IMAGES=
@@ -84,6 +85,7 @@ function prepare_image_builder() {
   export CONTAINER_NAME=stylus-image-builder
 
   cp $CANVOS_REPO/build/"$ISO_NAME".iso $IMAGE_BUILDER_REPO
+  export ISO_URL=https://www.spectrocloud.com/download/"$ISO_NAME".iso
 }
 
 function build_image_builder_image() {
@@ -95,8 +97,8 @@ function build_vmdk() {
 }
 
 function upload_vmdk_to_s3() {
-  if [ "$upload_vmdk_to_s3" = "true" ]; then
-    aws s3 cp $IMAGE_BUILDER_REPO/build/canvos-installer-"$custom_image_tag".vmdk $S3_FOLDER/canvos-$custom_image_tag.vmdk
+  if [ "$upload_iso_to_s3" = "true" ]; then
+    aws s3 cp $IMAGE_BUILDER_REPO/images/"$ISO_NAME".vmdk $S3_FOLDER/"$ISO_NAME".vmdk
   fi
 }
 
@@ -107,6 +109,36 @@ function run_build_vmdk_step() {
   build_image_builder_image
   build_vmdk
   upload_vmdk_to_s3
+}
+
+# -------------------- OVA ------------------
+function copy_vmdk_to_ova_folder() {
+  mkdir -p $OVA_BUILDER_REPO
+  cp $IMAGE_BUILDER_REPO/images/"$ISO_NAME".vmdk $OVA_BUILDER_REPO
+}
+
+# govc vm.create -dc=$GOVC_DATACENTER -ds=$GOVC_DATASTORE -folder=$GOVC_FOLDER -name=vmdk-test -disk=$GOVC_DATASTORE:stylus-v3.2.1-amd64/stylus-v3.2.1-amd64.vmdk -on=false -net=$GOVC_NETWORK -disk.controller=lsilogic
+
+#govc vm.create -m 8192 -c 8 -disk=stylus-v3.2.1-amd64/stylus-v3.2.1-amd64.vmdk -on=false -disk.controller=lsilogic vmdk-testyy
+
+function upload_vmdk_to_vsphere() {
+  cd $OVA_BUILDER_REPO
+  govc import.vmdk "$ISO_NAME".vmdk
+}
+
+function create_vm_with_vmdk() {
+  cd $OVA_BUILDER_REPO
+  govc vm.create -m 8192 -c 8 -disk="$ISO_NAME"/"$ISO_NAME".vmdk -on=false -disk.controller=lsilogic "$ISO_NAME"
+}
+
+#function download_ovf_from_vm() {
+#
+#}
+
+function run_build_ova_step() {
+  copy_vmdk_to_ova_folder
+  upload_vmdk_to_vsphere
+  create_vm_with_vmdk
 }
 
 # -------------------- Content Push ------------------
@@ -188,6 +220,8 @@ if [ "$output_artifact" = "ISO" ]; then
 elif [ "$output_artifact" = "VMDK" ]; then
   run_build_vmdk_step
 elif [ "$output_artifact" = "OVA" ]; then
+  run_build_vmdk_step
+  run_build_ova_step
   echo "Not supported yet"
 elif [ "$output_artifact" = "RAW" ]; then
   echo "Not supported yet"

@@ -33,6 +33,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - uses: numtide/clean-git-action@v1
     - shell: bash
       run: ./.github/actions/canvos/canvos-clean.sh
     - shell: bash
