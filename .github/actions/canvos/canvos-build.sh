@@ -131,14 +131,32 @@ function create_vm_with_vmdk() {
   govc vm.create -m 8192 -c 8 -disk="$ISO_NAME"/"$ISO_NAME".vmdk -on=false -disk.controller=lsilogic "$ISO_NAME"
 }
 
-#function download_ovf_from_vm() {
-#
-#}
+function export_vm_to_ovf() {
+  export VM_PATH=/Datacenter/vm/"$GOVC_FOLDER"/"$ISO_NAME"
+  govc vm.power -off $VM_PATH
+  govc export.ovf -vm $VM_PATH .
+}
+
+function sign_ovf_file(){
+  export PATH=$PATH:/home/ubuntu/ovftool/
+  cd "$ISO_NAME"
+  echo $SPECTRO_PEM_FOR_SIGNING_OVA | base64 -d > spectro-pem.json
+  ovftool --privateKey=spectrocloud.pem "$ISO_NAME".ovf "$ISO_NAME"-signed.ova
+}
+
+function upload_ovf_to_s3(){
+  if [ "$upload_iso_to_s3" = "true" ]; then
+    aws s3 cp "$ISO_NAME"-signed.ova $S3_FOLDER/"$ISO_NAME"-signed.ova
+  fi
+}
 
 function run_build_ova_step() {
   copy_vmdk_to_ova_folder
   upload_vmdk_to_vsphere
   create_vm_with_vmdk
+  export_vm_to_ovf
+  sign_ovf_file
+  upload_ovf_to_s3
 }
 
 # -------------------- Content Push ------------------
@@ -228,3 +246,4 @@ elif [ "$output_artifact" = "RAW" ]; then
 fi
 
 notify
+}
