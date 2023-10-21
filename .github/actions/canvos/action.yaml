@@ -61,6 +61,8 @@ runs:
         GOVC_NETWORK: ${{ inputs.GOVC_NETWORK }}
         GOVC_HOST: ${{ inputs.GOVC_HOST }}
         GOVC_CLUSTER: ${{ inputs.GOVC_CLUSTER }}
+        GOVC_RESOURCE_POOL: ${{ inputs.GOVC_RESOURCE_POOL }}
+        DISK_SIZE: ${{ inputs.DISK_SIZE }}
         AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         SLACK_CHANNEL_URL:  ${{ inputs.SLACK_CHANNEL_URL }}
