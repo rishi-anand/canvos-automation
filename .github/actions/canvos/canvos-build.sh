@@ -114,7 +114,8 @@ function run_build_vmdk_step() {
 # -------------------- OVA ------------------
 function copy_vmdk_to_ova_folder() {
   mkdir -p $OVA_BUILDER_REPO
-  cp $IMAGE_BUILDER_REPO/images/"$ISO_NAME".vmdk $OVA_BUILDER_REPO
+#  cp $IMAGE_BUILDER_REPO/images/"$ISO_NAME".vmdk $OVA_BUILDER_REPO
+  cp /home/ubuntu/data/"$ISO_NAME".vmdk $OVA_BUILDER_REPO
 }
 
 # govc vm.create -dc=$GOVC_DATACENTER -ds=$GOVC_DATASTORE -folder=$GOVC_FOLDER -name=vmdk-test -disk=$GOVC_DATASTORE:stylus-v3.2.1-amd64/stylus-v3.2.1-amd64.vmdk -on=false -net=$GOVC_NETWORK -disk.controller=lsilogic
@@ -238,7 +239,7 @@ if [ "$output_artifact" = "ISO" ]; then
 elif [ "$output_artifact" = "VMDK" ]; then
   run_build_vmdk_step
 elif [ "$output_artifact" = "OVA" ]; then
-  run_build_vmdk_step
+  #run_build_vmdk_step
   run_build_ova_step
   echo "Not supported yet"
 elif [ "$output_artifact" = "RAW" ]; then
