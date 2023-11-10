@@ -14,10 +14,15 @@ function git_clone_teams_edge_native() {
   ls
 }
 
+function clean() {
+    rm -rf $WORKDIR/*
+}
+
 
 
 git_clone_teams_edge_native
 bash create_config.sh $palette_endpoint $palette_api_key abcdf
+clean
 
 
 
