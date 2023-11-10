@@ -23,7 +23,7 @@ PALETTE_URL=$1
 PALETTE_API_KEY=$2
 PALETTE_PROJECT=$3
 
-cat << EOF > user-data
+cat << EOF > config.yaml
 paletteInfo:
   endpoint: $PALETTE_URL
   apiKey: $PALETTE_API_KEY
@@ -116,6 +116,9 @@ EOF
 
 git_clone_teams_edge_native
 createConfigYaml $palette_endpoint $palette_api_key abcdf
+ls
+pwd
+cat config.yaml
 clean
 
 
