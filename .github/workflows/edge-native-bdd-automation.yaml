@@ -41,6 +41,7 @@ jobs:
     environment: "US_DC"
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           repository: spectrocloud/teams-edge-native
           token: ${{ secrets.ACCESS_TOKEN }}
