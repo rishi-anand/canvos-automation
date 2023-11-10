@@ -26,6 +26,7 @@ runs:
         palette_api_key: ${{ inputs.palette_api_key }}
         custom_exec_cmd: ${{ inputs.custom_exec_cmd }}
         github_user: ${{ github.actor }}
+        ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
         GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ inputs.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
         GOVC_URL: ${{ inputs.GOVC_URL }}
         GOVC_INSECURE: ${{ inputs.GOVC_INSECURE }}
