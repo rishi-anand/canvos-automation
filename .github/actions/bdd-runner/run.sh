@@ -81,7 +81,7 @@ edgeHostConfig:
   osUser: "kairos"
   osPassword: "kairos"
   certificate: |
-    `-----BEGIN CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
     MIID7zCCAtegAwIBAgIUeYqlsuThQQ1xkon2rKuHSiUaRYUwDQYJKoZIhvcNAQEL
     BQAwgYYxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJDQTERMA8GA1UEBwwIU2FuIEpv
     c2UxGjAYBgNVBAoMEVNwZWN0cm8gQ2xvdWQgSW5jMRAwDgYDVQQLDAdwYWxldHRl
@@ -104,7 +104,7 @@ edgeHostConfig:
     8wxCbhf21U4P7ODqIXdXNAwfq9tzGhTMI02fbkKvtR99lGKH0A4v8aJzqH2fj3KQ
     IFEiNShRc5LHI+UyZDvSJX3VdUISCM+Nb98mTs2V2H/nuvsQWOMrMN2+ZHxP9AaD
     4JHv
-    -----END CERTIFICATE-----`
+    -----END CERTIFICATE-----
 monitoringServer:
   endpoint: ""
 createNewEdgeHosts: true
