@@ -1,0 +1,74 @@
+name: Edge Native BDD Automation
+
+on:
+  workflow_dispatch:
+    inputs:
+      features:
+        type: choice
+        description: Choose the Feature to run
+        options:
+          - Smoke
+          - Regression
+          - Lifecycle-Basic
+          - Lifecycle-Upgrade
+          - Lifecycle-Scale
+          - Lifecycle-Restart
+          - Lifecycle-Affinity
+          - Reliability-Basic
+          - Reliability-Restart
+          - Reliability-Affinity
+          - Lifecycle-All
+          - Reliability-All
+          - Lifecycle-Reliability
+        default: Regression
+      palette_endpoint:
+        type: string
+        description: Palette endpoint, Project (comma seperated)
+        default: scranton.dev.spectrocloud.com,edge-sites
+      palette_api_key:
+        type: string
+        description: Palette API Key
+        default: xxxxxx
+      custom_exec_cmd:
+        type: string
+        description: Custom Exec Test Command
+        default: bash test.sh
+
+jobs:
+  canvos:
+    runs-on: "edge-bdd-runner"
+    timeout-minutes: 240
+    environment: "US_DC"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: spectrocloud/teams-edge-native
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Run tests
+        uses: ./.github/actions/bdd-runner
+        with:
+          environment: "US_DC"
+          features: ${{ inputs.features }}
+          palette_endpoint: ${{ inputs.palette_endpoint }}
+          palette_api_key: ${{ inputs.palette_api_key }}
+          custom_exec_cmd: ${{ inputs.custom_exec_cmd }}
+          github_user: ${{ github.actor }}
+          GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
+          GOVC_URL: ${{ secrets.GOVC_URL }}
+          GOVC_INSECURE: ${{ secrets.GOVC_INSECURE }}
+          GOVC_USERNAME: ${{ secrets.GOVC_USERNAME }}
+          GOVC_PASSWORD: ${{ secrets.GOVC_PASSWORD }}
+          GOVC_FOLDER: ${{ secrets.GOVC_FOLDER }}
+          GOVC_DATACENTER: ${{ secrets.GOVC_DATACENTER }}
+          GOVC_DATASTORE: ${{ secrets.GOVC_DATASTORE }}
+          GOVC_NETWORK: ${{ secrets.GOVC_NETWORK }}
+          GOVC_HOST: ${{ secrets.GOVC_HOST }}
+          GOVC_CLUSTER: ${{ secrets.GOVC_CLUSTER }}
+          DISK_SIZE: ${{ secrets.DISK_SIZE }}
+          GOVC_RESOURCE_POOL: ${{ secrets.GOVC_RESOURCE_POOL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SLACK_CHANNEL_URL:  ${{ secrets.SLACK_CHANNEL_URL }}
+          
+            
+            

@@ -1,0 +1,52 @@
+name: 'action'
+description: 'Run Edge Native BDD Automation'
+inputs:
+  features:
+    description: 'Choose the Feature to run'
+    required: true
+  palette_endpoint:
+    description: 'Palette endpoint, Project (comma seperated)'
+  palette_api_key:
+    description: 'Palette API Key'
+  custom_exec_cmd:
+    description: 'Custom Exec Test Command'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: numtide/clean-git-action@v1
+    - shell: bash
+      run: ./.github/actions/bdd-runner/clean.sh
+    - shell: bash
+      run: ./.github/actions/bdd-runner/run.sh
+      env:
+        environment: "US_DC"
+        features: ${{ inputs.features }}
+        palette_endpoint: ${{ inputs.palette_endpoint }}
+        palette_api_key: ${{ inputs.palette_api_key }}
+        custom_exec_cmd: ${{ inputs.custom_exec_cmd }}
+        github_user: ${{ github.actor }}
+        GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ inputs.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
+        GOVC_URL: ${{ inputs.GOVC_URL }}
+        GOVC_INSECURE: ${{ inputs.GOVC_INSECURE }}
+        GOVC_USERNAME: ${{ inputs.GOVC_USERNAME }}
+        GOVC_PASSWORD: ${{ inputs.GOVC_PASSWORD }}
+        GOVC_FOLDER: ${{ inputs.GOVC_FOLDER }}
+        GOVC_DATACENTER: ${{ inputs.GOVC_DATACENTER }}
+        GOVC_DATASTORE: ${{ inputs.GOVC_DATASTORE }}
+        GOVC_NETWORK: ${{ inputs.GOVC_NETWORK }}
+        GOVC_HOST: ${{ inputs.GOVC_HOST }}
+        GOVC_CLUSTER: ${{ inputs.GOVC_CLUSTER }}
+        GOVC_RESOURCE_POOL: ${{ inputs.GOVC_RESOURCE_POOL }}
+        DISK_SIZE: ${{ inputs.DISK_SIZE }}
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        SLACK_CHANNEL_URL:  ${{ inputs.SLACK_CHANNEL_URL }}
+
+    - shell: bash
+      run: ./.github/actions/bdd-runner/clean.sh
+    - shell: bash
+      run: sudo rm -rf ${{ github.workspace }}/*
+      
+
+
