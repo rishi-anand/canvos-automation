@@ -126,7 +126,7 @@ function copy_vmdk_to_ova_folder() {
 
 function upload_vmdk_to_vsphere() {
   cd $OVA_BUILDER_REPO
-  govc import.vmdk "$ISO_NAME".vmdk
+  govc import.vmdk -folder="$GOVC_FOLDER" "$ISO_NAME".vmdk
 }
 
 function create_vm_with_vmdk() {
@@ -141,7 +141,7 @@ function export_vm_to_ovf() {
 }
 
 function sign_ovf_file(){
-  export PATH=$PATH:/home/ubuntu/ovftool/
+  export PATH=$PATH:/home/ubuntu/ovftool
   cd "$ISO_NAME"
   echo $SPECTRO_PEM_FOR_SIGNING_OVA | base64 -d > spectro-pem.json
   ovftool --privateKey=spectrocloud.pem "$ISO_NAME".ovf "$ISO_NAME"-signed.ova
@@ -156,7 +156,7 @@ function upload_ovf_to_s3(){
 function run_build_ova_step() {
   copy_vmdk_to_ova_folder
   upload_vmdk_to_vsphere
-  create_vm_with_vmdk
+  #create_vm_with_vmdk
   export_vm_to_ovf
   sign_ovf_file
   upload_ovf_to_s3
