@@ -5,6 +5,8 @@ set -x
 
 IFS='+' read -ra OS_PARTS <<< "$os_distribution"
 
+export PATH=$PATH:/home/ubuntu/ovftool
+
 WORKDIR=$(pwd)
 CANVOS_REPO=$WORKDIR/CanvOS
 IMAGE_BUILDER_REPO=$WORKDIR/stylus-image-builder

@@ -112,8 +112,6 @@ outputDir: "/Users/rishi/work/src/teams-edge-native/local/out"
 EOF
 }
 
-
-
 git_clone_teams_edge_native
 createConfigYaml $palette_endpoint $palette_api_key abcdf
 ls
