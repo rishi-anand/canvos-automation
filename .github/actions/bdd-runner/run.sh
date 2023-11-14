@@ -117,6 +117,10 @@ createConfigYaml $palette_endpoint $palette_api_key abcdf
 ls
 pwd
 cat config.yaml
+echo $features
+echo $palette_endpoint
+echo $palette_api_key
+echo $custom_exec_cmd
 #clean
 
 
