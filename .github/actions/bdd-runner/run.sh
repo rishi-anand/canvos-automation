@@ -121,7 +121,88 @@ echo $features
 echo $palette_endpoint
 echo $palette_api_key
 echo $custom_exec_cmd
-#clean
+
+          # - Smoke
+          # - Regression
+          # - Lifecycle-Basic
+          # - Lifecycle-Upgrade
+          # - Lifecycle-Scale
+          # - Lifecycle-Restart
+          # - Lifecycle-Affinity
+          # - Reliability-Basic
+          # - Reliability-Restart
+          # - Reliability-Affinity
+          # - Lifecycle-All
+          # - Reliability-All
+          # - Lifecycle-Reliability
+
+
+if [ "$features" = "Lifecycle-Basic" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicLifecycleFeature lifecycle
+
+elif [ "$features" = "Smoke" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestSmokeFeature lifecycle
+
+elif [ "$features" = "Regression" ]; then
+  echo "Running ....(IN PROGRESS)...... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicLifecycleFeature lifecycle
+
+elif [ "$features" = "Lifecycle-Upgrade" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicUpgradeFeature lifecycle
+
+elif [ "$features" = "Lifecycle-Scale" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestScaleFeature lifecycle
+  
+elif [ "$features" = "Lifecycle-Restart" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestRestartFeature lifecycle
+ 
+
+elif [ "$features" = "Lifecycle-Affinity" ]; then
+  echo "Running ...(NOT YET CONFIGURED)....... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicAffinityFeature reliability
+  
+
+elif [ "$features" = "Reliability-Basic" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicAffinityFeature reliability
+  
+
+elif [ "$features" = "Reliability-Restart" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestRestartFeature reliability
+
+
+elif [ "$features" = "Reliability-Affinity" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicAffinityFeature lifecycle
+  
+
+elif [ "$features" = "Lifecycle-All" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicLifecycleFeature lifecycle
+  
+
+elif [ "$features" = "Reliability-All" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicFeature lifecycle
+  
+
+elif [ "$features" = "Lifecycle-Reliability" ]; then
+  echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
+  ./test.sh TestBasicLifecycleFeature lifecycle
+ 
+
+  
+
+fi
+
+clean 
+
 
 
 
