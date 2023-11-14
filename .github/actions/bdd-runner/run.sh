@@ -137,7 +137,7 @@ echo $custom_exec_cmd
           # - Lifecycle-Reliability
 
 echo "Private repo fix:"
-cat ~/.gitconfig
+cat $HOME/.gitconfig
 
 
 if [ "$features" = "Lifecycle-Basic" ]; then
