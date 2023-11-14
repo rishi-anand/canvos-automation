@@ -51,8 +51,7 @@ jobs:
           custom_exec_cmd: ${{ inputs.custom_exec_cmd }}
           github_user: ${{ github.actor }}
           GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
-          # ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ACCESS_TOKEN: "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"
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GOVC_URL: ${{ secrets.GOVC_URL }}
           GOVC_INSECURE: ${{ secrets.GOVC_INSECURE }}
           GOVC_USERNAME: ${{ secrets.GOVC_USERNAME }}
