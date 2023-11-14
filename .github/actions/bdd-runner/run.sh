@@ -117,7 +117,7 @@ createConfigYaml $palette_endpoint $palette_api_key abcdf
 ls
 pwd
 cat config.yaml
-clean
+#clean
 
 
 

@@ -44,10 +44,10 @@ runs:
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         SLACK_CHANNEL_URL:  ${{ inputs.SLACK_CHANNEL_URL }}
 
-    - shell: bash
-      run: ./.github/actions/bdd-runner/clean.sh
-    - shell: bash
-      run: sudo rm -rf ${{ github.workspace }}/*
+#    - shell: bash
+#      run: ./.github/actions/bdd-runner/clean.sh
+#    - shell: bash
+#      run: sudo rm -rf ${{ github.workspace }}/*
       
 
 
