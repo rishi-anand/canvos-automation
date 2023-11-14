@@ -136,7 +136,7 @@ function create_vm_with_vmdk() {
 
 function export_vm_to_ovf() {
   export VM_PATH=/Datacenter/vm/"$GOVC_FOLDER"/"$ISO_NAME"
-  govc vm.power -off $VM_PATH
+  #govc vm.power -off $VM_PATH
   govc export.ovf -vm $VM_PATH .
 }
 
@@ -156,7 +156,7 @@ function upload_ovf_to_s3(){
 function run_build_ova_step() {
   copy_vmdk_to_ova_folder
   upload_vmdk_to_vsphere
-  #create_vm_with_vmdk
+  create_vm_with_vmdk
   export_vm_to_ovf
   sign_ovf_file
   upload_ovf_to_s3
