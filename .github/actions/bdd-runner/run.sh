@@ -10,6 +10,8 @@ echo "Github username is $github_user"
 
 function prepare_go_env(){
   go env -w GOPRIVATE="github.com/spectrocloud"
+  eval `ssh-agent -s`
+  ssh-add - <<< $PRIVATE_SSH_KEY
 }
 
 
@@ -27,8 +29,8 @@ function createNETRC() {
           echo "machine api.github.com" >> .netrc
           echo "    login $ACCESS_USER" >> .netrc
           echo "    password $ACCESS_TOKEN" >> .netrc
-          echo '[url "ssh://git@github.com/"]' > $HOME/.gitconfig
-          echo "    insteadOf = https://github.com/" >> $HOME/.gitconfig
+          #echo '[url "ssh://git@github.com/"]' > $HOME/.gitconfig
+          #echo "    insteadOf = https://github.com/" >> $HOME/.gitconfig
 	
     
 }
