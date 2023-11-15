@@ -158,6 +158,8 @@ echo $custom_exec_cmd
 # echo "Private repo fix:"
 # cat $HOME/.gitconfig
 
+cat .netrc
+go env
 
 if [ "$features" = "Lifecycle-Basic" ]; then
   echo "Running .......... ./test.sh TestBasicLifecycleFeature lifecycle"
