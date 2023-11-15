@@ -8,6 +8,11 @@ WORKDIR=$(pwd)
 BDD_REPO=$WORKDIR/teams-edge-native
 echo "Github username is $github_user"
 
+function prepare_go_env(){
+  go env -w GOPRIVATE="github.com/spectrocloud"
+}
+
+
 function git_clone_teams_edge_native() {
   git clone https://$ACCESS_TOKEN@github.com/spectrocloud/teams-edge-native.git
   cd $BDD_REPO
@@ -125,6 +130,7 @@ EOF
 }
 
 git_clone_teams_edge_native
+prepare_go_env
 createNETRC
 createConfigYaml $palette_endpoint $palette_api_key abcdf
 ls
