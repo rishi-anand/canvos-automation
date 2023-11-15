@@ -53,6 +53,7 @@ jobs:
           GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON: ${{ secrets.GCP_SPECTRO_DEV_PUBLIC_BASE64_ENCODED_JSON }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_USER: ${{ secrets.ACCESS_USER }}
+          PRIVATE_SSH_KEY: ${{ secrets.PRIVATE_SSH_KEY }}
           GOVC_URL: ${{ secrets.GOVC_URL }}
           GOVC_INSECURE: ${{ secrets.GOVC_INSECURE }}
           GOVC_USERNAME: ${{ secrets.GOVC_USERNAME }}
