@@ -3,6 +3,7 @@
 set -e
 set -x
 
+ACCESS_USER="rishi-anand"
 WORKDIR=$(pwd)
 BDD_REPO=$WORKDIR/teams-edge-native
 echo "Github username is $github_user"
@@ -13,6 +14,17 @@ function git_clone_teams_edge_native() {
   pwd
   ls
 }
+
+function createNETRC() {
+          echo "machine github.com" > .netrc
+          echo "    login $ACCESS_USER" >> .netrc
+          echo "    password $ACCESS_TOKEN" >> .netrc
+          echo "machine api.github.com" >> .netrc
+          echo "    login $ACCESS_USER" >> .netrc
+          echo "    password $ACCESS_TOKEN" >> .netrc
+    
+}
+
 
 function clean() {
     rm -rf $WORKDIR/*
@@ -113,6 +125,7 @@ EOF
 }
 
 git_clone_teams_edge_native
+createNETRC
 createConfigYaml $palette_endpoint $palette_api_key abcdf
 ls
 pwd
@@ -136,8 +149,8 @@ echo $custom_exec_cmd
           # - Reliability-All
           # - Lifecycle-Reliability
 
-echo "Private repo fix:"
-cat $HOME/.gitconfig
+# echo "Private repo fix:"
+# cat $HOME/.gitconfig
 
 
 if [ "$features" = "Lifecycle-Basic" ]; then
