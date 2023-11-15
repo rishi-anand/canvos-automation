@@ -29,8 +29,8 @@ function createNETRC() {
           echo "machine api.github.com" >> .netrc
           echo "    login $ACCESS_USER" >> .netrc
           echo "    password $ACCESS_TOKEN" >> .netrc
-          echo '[url "ssh://git@github.com/"]' > $HOME/.gitconfig
-          echo "    insteadOf = https://github.com/" >> $HOME/.gitconfig
+          # echo '[url "ssh://git@github.com/"]' > $HOME/.gitconfig
+          # echo "    insteadOf = https://github.com/" >> $HOME/.gitconfig
 	
     
 }
