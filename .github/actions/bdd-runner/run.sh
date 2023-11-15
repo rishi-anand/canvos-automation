@@ -3,7 +3,7 @@
 set -e
 set -x
 
-ACCESS_USER="rishi-anand"
+# ACCESS_USER="rishi-anand"
 WORKDIR=$(pwd)
 BDD_REPO=$WORKDIR/teams-edge-native
 echo "Github username is $github_user"
